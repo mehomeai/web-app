@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400;500&display=swap');
+@import 'tailwindcss';
+
+:root {
+  --color-primary: #17191c;
+  --color-secondary: #6b6f76;
+  --color-accent: #1e6b66;
+  --color-bg-light: #f3f2ee;
+  --color-bg-dark: #17191c;
+  --color-bg-muted: #e9e7e1;
+  --color-text-primary: #17191c;
+  --color-text-secondary: #6b6f76;
+  --color-text-muted: #9a9ea5;
+  --color-text-inverse: #f3f2ee;
+  --color-success: #1e6b66;
+  --color-warning: #b98a3e;
+  --color-error: #b4452f;
+  --hairline: #dad8d2;
+  --font-display: 'Geist', sans-serif;
+  --font-body: 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+}
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-accent: var(--color-accent);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+body {
+  font-family: var(--font-body);
+  background: #17191c;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+.f-display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.045em; }
+.f-mono { font-family: var(--font-mono); }
+
+.grain::after { content: none; }
+
+.video-media-frame { box-sizing: border-box; height: 100%; width: 100%; overflow: hidden; }
+.video-media-frame > :is(img, video) { display: block; height: 100%; width: 100%; object-fit: cover; }

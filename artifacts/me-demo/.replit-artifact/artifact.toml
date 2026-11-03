@@ -1,0 +1,29 @@
+kind = "video"
+videoAspectRatio = "9:16"
+previewPath = "/me/"
+title = "Me — Your intelligence. Yours."
+description = "A mobile app product demo for Me, a personal assistant with an at-home LLM and user-owned data, intelligence, and algorithms."
+version = "1.0.0"
+id = "artifacts/me-demo"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/me/" ]
+localPort = 21620
+
+[services.development]
+run = "pnpm --filter @workspace/me-demo run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/me-demo", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/me-demo/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21620"
+BASE_PATH = "/me/"
