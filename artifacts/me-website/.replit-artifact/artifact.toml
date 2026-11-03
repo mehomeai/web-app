@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Me — Home-first intelligence"
+description = "The Me product website: home-first personal intelligence, mobile companion and home computer, with a landing page, how-it-works guide, and email waitlist signup."
+version = "1.0.0"
+id = "artifacts/me-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23380
+
+[services.development]
+run = "pnpm --filter @workspace/me-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/me-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/me-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23380"
+BASE_PATH = "/"

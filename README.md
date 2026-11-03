@@ -1,19 +1,19 @@
-# web-app
+# Me Home AI — Personal AI Showcase
 
-Web application for Me Home AI.
+This repository contains the Me Home AI showcase website, interactive product demo,
+and supporting API and shared packages. Me Home AI is a privacy-first home agentic
+system. Learn about the vision at [Me — Your intelligence. Yours.](https://mehomeai.replit.app/me/).
 
-Part of [Me Home AI](https://github.com/mehomeai), a privacy-first home agentic system.
-Learn about the vision at [Me — Your intelligence. Yours.](https://mehomeai.replit.app/me/).
+## Development
 
-## Status
+This is a pnpm workspace using Node.js 24 and TypeScript. Install dependencies with
+`pnpm install`, then run `pnpm run typecheck` or `pnpm run build` from the repository
+root. The showcase website and interactive demo live in `artifacts/me-website` and
+`artifacts/me-demo`; supporting API and shared packages live in `artifacts/api-server`
+and `lib/`.
 
-This repository is at the initial setup stage. Application code, supported platforms,
-installation steps, and release commitments have not been established yet.
-The current CI checks repository hygiene; it does not validate a working product.
-
-## Scope
-
-Browser interaction, accessibility, settings, and household controls.
+The API requires `DATABASE_URL` to connect to PostgreSQL. See `replit.md` and the
+workspace package scripts for additional development commands.
 
 ## Contributing
 
@@ -21,7 +21,7 @@ Start with the [contribution guide](https://github.com/mehomeai/.github/blob/mai
 [code of conduct](https://github.com/mehomeai/.github/blob/main/CODE_OF_CONDUCT.md), and
 [governance](https://github.com/mehomeai/.github/blob/main/GOVERNANCE.md).
 Discuss substantial changes in an issue before implementing them. Pull requests
-should include relevant tests and documentation once application code exists.
+should include relevant tests and documentation.
 
 For questions and cross-project planning, use [community discussions](https://github.com/mehomeai/.github/discussions).
 Report vulnerabilities privately through this repository's **Security → Report a vulnerability**;

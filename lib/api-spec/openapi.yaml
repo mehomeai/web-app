@@ -1,0 +1,100 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+paths:
+  /me/waitlist:
+    post:
+      operationId: joinMeWaitlist
+      tags: [waitlist]
+      summary: Join the Me launch waitlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WaitlistInput"
+      responses:
+        "200":
+          description: Signup recorded, including repeat submissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WaitlistReceipt"
+        "400":
+          description: Invalid email or consent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "429":
+          description: Too many attempts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+        "503":
+          description: Signup temporarily unavailable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApiError"
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+components:
+  schemas:
+    WaitlistInput:
+      type: object
+      required: [email, consent]
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        consent:
+          type: boolean
+          enum: [true]
+        website:
+          type: string
+          maxLength: 200
+          description: Honeypot field; leave blank
+    WaitlistReceipt:
+      type: object
+      required: [success, message]
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    ApiError:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
