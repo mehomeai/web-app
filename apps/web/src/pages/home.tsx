@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { ChatScreen, ConceptLabel, EASE, MeMark, Phone, Reveal, SiteShell, img } from '@/components/site';
 import { useState } from 'react';
+import { TryIt } from '@/components/try-it';
 
 const family = [
   ['Maya · age 9', 'learning mode'],
@@ -131,6 +132,22 @@ export default function Home() {
           </p></Reveal>
         </div>
         <Reveal delay={0.15} className="flex justify-center"><Phone><ChatScreen /></Phone></Reveal>
+      </section>
+
+      {/* Scripted demo */}
+      <section id="try-it" className="mx-auto max-w-6xl scroll-mt-24 px-5 pb-24 md:px-8">
+        <div className="grid gap-10 md:grid-cols-[.75fr_1.25fr] md:items-start">
+          <Reveal>
+            <div className="eyebrow">A small preview</div>
+            <h2 className="f-display mt-5 text-[clamp(36px,5vw,58px)] leading-[1.03]">Ask a little.<br /><span className="text-muted-foreground">See the boundary.</span></h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted-foreground">This demo uses fixed local scripts to show product topics. It sends no questions to an AI model or outside service.</p>
+          </Reveal>
+          <Reveal delay={0.1}><TryIt /></Reveal>
+        </div>
+        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-border pt-5 text-sm">
+          <Link href="/explore" className="text-accent hover:underline">Explore product areas</Link>
+          <Link href="/ask" className="text-accent hover:underline">Ask about documented Me details</Link>
+        </div>
       </section>
 
       {/* Room */}

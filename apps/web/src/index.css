@@ -80,53 +80,29 @@
   --elevate-2: rgba(0, 0, 0, 0.08);
 
   --background: 45 12% 94%;
-
   --foreground: 216 10% 10%;
-
   --border: 45 8% 84%;
-
   --card: 45 30% 98%;
-
   --card-foreground: 216 10% 10%;
-
   --card-border: 45 10% 88%;
-
   --sidebar: 45 12% 94%;
-
   --sidebar-foreground: 216 10% 10%;
-
   --sidebar-border: 45 8% 84%;
-
   --sidebar-primary: 176 56% 27%;
-
   --sidebar-primary-foreground: 45 12% 94%;
-
   --sidebar-accent: 45 10% 90%;
-
   --sidebar-accent-foreground: 216 10% 10%;
-
   --sidebar-ring: 176 56% 27%;
-
   --popover: 45 30% 98%;
-
   --popover-foreground: 216 10% 10%;
-
   --popover-border: 45 10% 88%;
-
   --primary: 216 10% 10%;
-
   --primary-foreground: 45 12% 94%;
-
   --secondary: 45 10% 90%;
-
   --secondary-foreground: 216 10% 10%;
-
   --muted: 45 10% 90%;
-
-  --muted-foreground: 218 5% 44%;
-
+  --muted-foreground: 218 5% 40%;
   --accent: 176 56% 27%;
-
   --accent-foreground: 45 12% 94%;
 
   --destructive: 10 59% 44%;
@@ -228,64 +204,64 @@
   --elevate-1: rgba(255, 255, 255, 0.04);
   --elevate-2: rgba(255, 255, 255, 0.09);
 
-  --background: 45 12% 94%;
+  --background: 220 9% 12%;
 
-  --foreground: 216 10% 10%;
+  --foreground: 45 16% 92%;
 
-  --border: 45 8% 84%;
+  --border: 220 7% 25%;
 
-  --card: 45 30% 98%;
+  --card: 220 8% 16%;
 
-  --card-foreground: 216 10% 10%;
+  --card-foreground: 45 16% 92%;
 
-  --card-border: 45 10% 88%;
+  --card-border: 220 7% 26%;
 
-  --sidebar: 45 12% 94%;
+  --sidebar: 220 9% 12%;
 
-  --sidebar-foreground: 216 10% 10%;
+  --sidebar-foreground: 45 16% 92%;
 
-  --sidebar-border: 45 8% 84%;
+  --sidebar-border: 220 7% 25%;
 
-  --sidebar-primary: 176 56% 27%;
+  --sidebar-primary: 173 35% 55%;
 
-  --sidebar-primary-foreground: 45 12% 94%;
+  --sidebar-primary-foreground: 220 9% 12%;
 
-  --sidebar-accent: 45 10% 90%;
+  --sidebar-accent: 220 8% 20%;
 
-  --sidebar-accent-foreground: 216 10% 10%;
+  --sidebar-accent-foreground: 45 16% 92%;
 
-  --sidebar-ring: 176 56% 27%;
+  --sidebar-ring: 173 35% 55%;
 
-  --popover: 45 30% 98%;
+  --popover: 220 8% 16%;
 
-  --popover-foreground: 216 10% 10%;
+  --popover-foreground: 45 16% 92%;
 
-  --popover-border: 45 10% 88%;
+  --popover-border: 220 7% 26%;
 
-  --primary: 216 10% 10%;
+  --primary: 45 16% 92%;
 
-  --primary-foreground: 45 12% 94%;
+  --primary-foreground: 220 9% 12%;
 
-  --secondary: 45 10% 90%;
+  --secondary: 220 8% 21%;
 
-  --secondary-foreground: 216 10% 10%;
+  --secondary-foreground: 45 16% 92%;
 
-  --muted: 45 10% 90%;
+  --muted: 220 8% 21%;
 
-  --muted-foreground: 218 5% 44%;
+  --muted-foreground: 220 6% 67%;
 
-  --accent: 176 56% 27%;
+  --accent: 173 35% 55%;
 
-  --accent-foreground: 45 12% 94%;
+  --accent-foreground: 220 9% 12%;
 
   --destructive: 10 59% 44%;
 
   --destructive-foreground: 45 12% 94%;
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
-  --input: 45 8% 80%;
-  --ring: 176 56% 27%;
-  --chart-1: 176 56% 27%;
+  --input: 220 7% 30%;
+  --ring: 173 35% 55%;
+  --chart-1: 173 35% 55%;
   --chart-2: 37 50% 48%;
   --chart-3: 216 10% 10%;
   --chart-4: 218 5% 44%;
@@ -441,3 +417,36 @@ html { scroll-behavior: smooth; }
 .pulse-ring { animation: pulse-ring 1.8s ease-out infinite; }
 @keyframes blink { 0%,100% { opacity: 1 } 50% { opacity: .3 } }
 .blink { animation: blink 1.2s infinite; }
+
+.site-noise::after {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  opacity: .018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+:focus-visible { outline: 2px solid hsl(var(--accent)); outline-offset: 3px; }
+
+.accessibility-page {
+  --border: 45 8% 52%;
+  --input: 45 8% 52%;
+}
+
+.accessibility-page :focus-visible {
+  outline: 3px solid hsl(var(--accent));
+  outline-offset: 4px;
+}
+
+@media (forced-colors: active) {
+  .accessibility-page :focus-visible {
+    outline-color: CanvasText;
+  }
+}
+
+.dark .accessibility-page {
+  --border: 220 7% 50%;
+  --input: 220 7% 50%;
+}

@@ -3,6 +3,8 @@ import {
   type ComponentType,
   type ErrorInfo,
   type ReactNode,
+  useEffect,
+  useRef,
 } from 'react';
 
 export interface ErrorFallbackProps {
@@ -36,13 +38,27 @@ function toError(value: unknown): Error {
 }
 
 function DefaultFallback({ error, resetError }: ErrorFallbackProps) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
   return (
     <div className="min-h-screen w-full flex items-center justify-center bg-gray-50 p-6">
       <div className="max-w-lg w-full text-center">
-        <h1 className="text-xl font-semibold text-gray-900">
+        <h1
+          ref={headingRef}
+          tabIndex={-1}
+          className="text-xl font-semibold text-gray-900"
+        >
           Something went wrong
         </h1>
-        <p className="mt-2 text-sm text-gray-600">
+        <p
+          role="alert"
+          aria-atomic="true"
+          className="mt-2 text-sm text-gray-600"
+        >
           This part of the app hit an error. The rest of the app is still
           running.
         </p>

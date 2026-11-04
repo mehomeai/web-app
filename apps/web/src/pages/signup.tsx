@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'wouter';
 import { motion } from 'framer-motion';
@@ -10,24 +10,28 @@ type FormValues = { email: string; consent: boolean; website: string };
 
 function errorMessage(err: unknown): string {
   const e = err as { data?: { error?: string; message?: string }; message?: string } | null;
-  return e?.data?.error || e?.data?.message || 'Something went wrong. Please try again.';
+  return e?.data?.error || e?.data?.message || e?.message || 'Something went wrong. Please try again.';
 }
 
 export default function Signup() {
   const join = useJoinMeWaitlist();
   const [done, setDone] = useState<string | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+  const submitting = useRef(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FormValues>({
     defaultValues: { email: '', consent: false, website: '' },
   });
 
   const onSubmit = (v: FormValues) => {
+    if (submitting.current) return;
+    submitting.current = true;
     setServerError(null);
     join.mutate(
       { data: { email: v.email.trim(), consent: true, ...(v.website ? { website: v.website } : {}) } },
       {
         onSuccess: (r) => { if (r.success) setDone(r.message); else setServerError(r.message || 'We could not add you. Please try again.'); },
         onError: (e) => setServerError(errorMessage(e)),
+        onSettled: () => { submitting.current = false; },
       },
     );
   };
@@ -51,11 +55,11 @@ export default function Signup() {
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <label htmlFor="email" className="text-sm font-medium">Email</label>
-                <input id="email" type="email" autoComplete="email" placeholder="you@example.com" disabled={join.isPending}
-                  {...register('email', { required: 'Enter your email address.', maxLength: { value: 254, message: 'That email is too long.' }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email address.' } })}
+                <input id="email" type="email" autoComplete="email" placeholder="you@example.com" disabled={join.isPending} aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? 'error-email' : undefined}
+                  {...register('email', { required: 'Email is required', maxLength: { value: 254, message: 'That email is too long.' }, pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Enter a valid email address.' } })}
                   className="mt-2 w-full rounded-xl border border-input bg-background px-4 py-3 text-base outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
                   data-testid="input-email" />
-                {errors.email && <p className="mt-2 text-sm text-destructive" data-testid="error-email">{errors.email.message}</p>}
+                {errors.email && <p id="error-email" className="mt-2 text-sm text-destructive" data-testid="error-email">{errors.email.message}</p>}
 
                 <div aria-hidden className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
                   <label htmlFor="website">Website</label>
@@ -63,13 +67,13 @@ export default function Signup() {
                 </div>
 
                 <label className="mt-5 flex cursor-pointer gap-3 text-sm leading-relaxed text-muted-foreground">
-                  <input type="checkbox" disabled={join.isPending} {...register('consent', { validate: (v) => v || 'Please confirm to join the waitlist.' })}
+                  <input type="checkbox" disabled={join.isPending} aria-invalid={Boolean(errors.consent)} aria-describedby={errors.consent ? 'error-consent' : undefined} {...register('consent', { validate: (v) => v || 'To join the waitlist, you need to accept the privacy consent' })}
                     className="mt-1 h-4 w-4 shrink-0 accent-[#1e6b66]" data-testid="checkbox-consent" />
                   <span>I agree to have my email stored by this website so the Me team can send me launch updates.</span>
                 </label>
-                {errors.consent && <p className="mt-2 text-sm text-destructive" data-testid="error-consent">{errors.consent.message}</p>}
+                {errors.consent && <p id="error-consent" className="mt-2 text-sm text-destructive" data-testid="error-consent">{errors.consent.message}</p>}
 
-                {serverError && <p className="mt-4 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive" role="alert" data-testid="status-error">{serverError}</p>}
+                {serverError && <div className="mt-4 rounded-xl border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive" role="alert" data-testid="status-error"><p>{serverError}</p><p className="mt-1 text-xs">Your email is still in this form and was not saved. You can retry.</p></div>}
 
                 <button type="submit" disabled={join.isPending} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm text-primary-foreground transition-opacity hover:opacity-85 disabled:opacity-60" data-testid="button-submit">
                   {join.isPending ? <><Loader2 className="h-4 w-4 animate-spin" /> Joining</> : <>Join the waitlist <ArrowRight className="h-4 w-4" /></>}

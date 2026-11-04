@@ -1,12 +1,17 @@
 import { type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
+import { ErrorBoundaryTestScreen } from '@/components/error-boundary-test-screen';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import Home from '@/pages/home';
 import HowItWorks from '@/pages/how-it-works';
 import Signup from '@/pages/signup';
+import Explore from '@/pages/explore';
+import ExploreDetail from '@/pages/explore-detail';
+import Ask from '@/pages/ask';
+import StaleChat from '@/pages/stale-chat';
 import { PageMetadata } from '@/components/page-metadata';
 import {
   Route,
@@ -26,6 +31,16 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/how-it-works" component={HowItWorks} />
         <Route path="/signup" component={Signup} />
+        <Route path="/explore" component={Explore} />
+        <Route path="/explore/:slug" component={ExploreDetail} />
+        <Route path="/ask" component={Ask} />
+        <Route path="/chat/:id" component={StaleChat} />
+        {import.meta.env.MODE === 'test' ? (
+          <Route
+            path="/__test/error-boundary"
+            component={ErrorBoundaryTestScreen}
+          />
+        ) : null}
         <Route component={NotFound} />
       </Switch>
     </RoutedErrorBoundary>
